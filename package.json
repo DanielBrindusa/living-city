@@ -1,6 +1,6 @@
 {
   "name": "living-city",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "check": "tsc --noEmit",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node scripts/build-branch.mjs && node --test tests/*.test.mjs",
     "build:branch": "node scripts/build-branch.mjs",
     "build:pages": "tsc --noEmit && vite build --outDir docs --emptyOutDir"
   },

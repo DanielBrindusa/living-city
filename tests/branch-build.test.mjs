@@ -40,7 +40,7 @@ test('compiled simulation creates a stable seeded world', async()=>{
   const {getCityTime}=await import('../docs/src/environment/time.js');
   const world=buildWorld(),residents=createPopulation(world);
   assert.ok(world.venues.length>50);
-  assert.equal(residents.length,480);
+  assert.equal(residents.length,6200);
   assert.deepEqual(residents.slice(0,10).map(x=>[x.name,x.home.id]),createPopulation(buildWorld()).slice(0,10).map(x=>[x.name,x.home.id]));
   for(const day of ['2026-01-15','2026-04-15','2026-07-15','2026-10-29','2026-12-25']){
     for(const hour of ['00','06','09','12','18','22']){
