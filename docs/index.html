@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><meta name="theme-color" content="#101d29"/><meta name="description" content="A tiny society. A living 3D city. Watch lives unfold."/><title>Living City — A little world, always in motion</title></head><body><div id="app"><div class="loading">Building your little world…</div></div><link rel="stylesheet" href="./src/ui/styles.css"/>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script>
+<script type="module">
+  try { await import('./src/main.js'); }
+  catch (error) {
+    console.error('Living City could not start:', error);
+    const root = document.getElementById('app');
+    if (root) {
+      root.style.cssText = 'padding:2.5rem;color:#edf2ff;font:16px system-ui;background:#152433;min-height:100vh';
+      root.replaceChildren();
+      const heading = document.createElement('h1'); heading.textContent = 'Living City could not load';
+      const detail = document.createElement('p'); detail.textContent = 'The 3D engine did not load. Check your network connection and browser developer console, then reload.';
+      root.append(heading, detail);
+    }
+  }
+</script></body></html>

@@ -1,0 +1,3 @@
+GitHub Pages branch deployment: main /docs
+Prebuilt ES modules; Three.js 0.180.0 is loaded from jsDelivr.
+For a fully bundled build run: npm install && npm run build:pages

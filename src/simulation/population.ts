@@ -82,7 +82,7 @@ export function updatePopulation(pop:Citizen[],t:CityTime,world:World){
    c.progress=clamp(minutesSince/duration,0,1);
    c.traveling=c.progress<1;
    const p=locationAlong(c.path,c.progress);c.x=p.x;c.z=p.z;
-  }else{c.traveling=false;c.progress=1;c.x=current.entrance.x;c.z=current.entrance.z;}
+  }else{c.traveling=false;c.progress=1;c.x=current.venue.entrance.x;c.z=current.venue.entrance.z;}
   // Buildings hide their occupants. Local rendered population uses the existing persistent identities.
   c.visible=c.traveling;
  }

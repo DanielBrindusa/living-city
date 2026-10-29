@@ -32,14 +32,33 @@ npm run preview
 
 The deployable site is generated in `dist/`. Do not open `index.html` by double-clicking; use Vite or a static HTTP server to serve the compiled output.
 
-## Deploy with GitHub Pages
+## Deploy directly from `main` branch (no Actions deployment)
 
-1. Create an empty GitHub repository and push **the contents of this folder** to its `main` branch.
-2. On GitHub, go to **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. The `.github/workflows/deploy.yml` workflow installs dependencies, runs tests, builds and publishes the site on pushes to `main` (or through **Actions → Publish Living City → Run workflow**).
-4. Once the workflow completes, the URL appears under GitHub **Settings → Pages**.
+The ZIP already contains **`docs/index.html` and all needed application files**. GitHub Pages can serve these as a static site without executing Vite or TypeScript. **Do not select `/ (root)`**; `index.html` at the repository root is for Vite development and cannot run directly on GitHub Pages.
 
-`vite.config.ts` uses `base: './'`, so compiled asset URLs support both `username.github.io/repository/` and a site served at a domain root. No secrets or server infrastructure are needed.
+1. Unzip the project locally. Upload **all contents** of the `living-city` directory into the **root** of your GitHub repository on the `main` branch, keeping the `docs` directory and all its files. Do not upload just the ZIP file. Commit the changes. If replacing an earlier version, overwrite existing files and make sure the old workflow has been replaced.
+2. Open **Repository → Settings → Pages**.
+3. Under **Build and deployment**, choose **Source: Deploy from a branch** (not GitHub Actions).
+4. Choose **Branch: `main`** and **Folder: `/docs`**; click **Save**.
+5. Once GitHub Pages finishes publishing, open the URL shown in Settings → Pages. You should see the 3D city UI, not the original “Building your little world…” text.
+
+The files initially included in `docs/` are a **prebuilt ES-module fallback**. They work without a build step, but load the Three.js engine from jsDelivr over HTTPS. No authentication is required. The city still uses Open-Meteo weather with a graceful weather fallback. If a viewer cannot access the Three.js CDN, the site shows a startup error rather than hanging silently.
+
+**Recommended for production:** on your own machine with internet/npm access, run:
+
+```bash
+npm install
+npm test
+npm run build:pages
+```
+
+This replaces the `docs/` fallback with a real **Vite-bundled production build**, including Three.js locally. Commit/push the generated `docs/` changes to `main`; GitHub Pages will publish the updated files directly from that branch without running a deployment workflow.
+
+For a regular build targeting a different host, `npm run build` continues to generate `dist/`.
+
+The included `.github/workflows/deploy.yml` has been changed into an optional **validation-only** workflow. It **does not deploy**; Pages reads `/docs` from `main`.
+
+**Troubleshooting:** If you see only the unstyled initial loading sentence, Pages is probably serving the repository root rather than `/docs`. If you see a “could not load” message, open browser DevTools → Console/Network and check Three.js CDN availability. If you see a blank 3D viewport on an older device, check WebGL 2 support.
 
 ## What works now
 
