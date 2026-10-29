@@ -1,0 +1,4 @@
+import {test} from 'node:test';import {readFileSync,existsSync} from 'node:fs';import {strict as assert} from 'node:assert';
+test('required source entrypoints exist',()=>{for(const path of ['src/main.ts','src/render/viewer.ts','src/world/model.ts','src/simulation/population.ts','src/environment/time.ts','.github/workflows/deploy.yml'])assert.ok(existsSync(path),path);});
+test('project is static-hostable',()=>{const pkg=JSON.parse(readFileSync('package.json','utf8'));assert.ok(pkg.scripts.build.includes('vite build'));assert.ok(!pkg.dependencies.express);assert.ok(readFileSync('vite.config.ts','utf8').includes("base: './'"));});
+test('viewer does not ask for location or account access',()=>{const main=readFileSync('src/main.ts','utf8');assert.ok(!main.includes('geolocation'));assert.ok(!main.includes('localStorage'));});
